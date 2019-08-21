@@ -1,0 +1,100 @@
+﻿Version=3.2
+IconFile=
+NumberOfModules=0
+Package=b4a.example
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+UserTypesHint=
+NumberOfFiles=1
+File1=1.bal
+NumberOfLibraries=4
+Library1=core
+Library2=httputils2
+Library3=phone
+Library4=stringutils
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: B4A Example
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	Private link As String = "http://xxx.duckdns.org:54021/upload"
+	Private cc As ContentChooser
+End Sub
+
+Sub Globals
+	Private txtMessage As EditText
+	Private btnSendMessage As Button
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	If FirstTime Then
+		cc.Initialize("cc")
+	End If
+	Activity.LoadLayout("1")
+End Sub
+
+Sub btnSendFile_Click
+	cc.Show("*/*", "Choose file")
+End Sub
+
+Sub cc_Result (Success As Boolean, Dir As String, FileName As String)
+	If Success Then
+		Dim j As HttpJob
+		Dim out As OutputStream
+		out.InitializeToBytesArray(0)
+		Dim In As InputStream = File.OpenInput(Dir, FileName)
+		File.Copy2(In, out)
+		
+		Dim lastSlash As Int = FileName.LastIndexOf("/")
+		If lastSlash > -1 Then
+			FileName = FileName.SubString(lastSlash + 1)
+		End If
+		Dim su As StringUtils
+		Dim j As HttpJob
+		j.Initialize("file", Me)
+		j.PostBytes(link & "?type=file&name=" & su.EncodeUrl(FileName, "UTF8"), _
+			out.ToBytesArray)
+	End If
+End Sub
+
+Sub btnSendMessage_Click
+	Dim j As HttpJob
+	j.Initialize("msg", Me)
+	j.PostString(link & "?type=text", txtMessage.Text)
+	Dim p As Phone
+	p.HideKeyboard(Activity)
+End Sub
+
+Sub JobDone(j As HttpJob)
+	If j.Success Then
+		ToastMessageShow("Success: " & j.GetString, False)
+		Log("Success: " & j.GetString)
+	Else
+		ToastMessageShow("Error: " & j.ErrorMessage, True)
+		Log("Error: " & j.ErrorMessage)
+	End If
+	j.Release
+End Sub
+
+Sub txtMessage_TextChanged (Old As String, New As String)
+	btnSendMessage.Enabled = New.Length > 0
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub

@@ -1,0 +1,65 @@
+﻿Version=1.45
+AppType=StandardJava
+IconFile=
+NumberOfModules=4
+Module3=HttpJob
+ModuleVisible3=0
+Module4=HttpUtils2Service
+ModuleVisible4=0
+Module1=Upload
+ModuleVisible1=1
+Module2=Test
+ModuleVisible2=1
+Package=b4j.example
+UserTypesHint=Test,Upload,HttpJob
+NumberOfFiles=0
+NumberOfLibraries=4
+Library1=jcore
+Library2=jhttp
+Library3=jserver
+Library4=jstringutils
+@EndOfDesignText@
+'Non-UI application (console application)
+#Region  Project Attributes 
+	#CommandLineArgs:
+	#MergeLibraries: False 
+#End Region
+
+Sub Process_Globals
+	Private domain As String = "xxx"
+	Private token As String = "yyy"
+	Private updateIp As Timer
+	Private srvr As Server
+	Public filesFolder As String = "uploaded"
+End Sub
+
+Sub AppStart (Args() As String)
+	updateIp.Initialize("updateIp", 10 * 60 * 1000) '10 minutes
+	updateIp.Enabled = True
+	UpdateIp_Tick
+	srvr.Initialize("srvr")
+	srvr.Port = 54021
+	File.MakeDir(File.DirApp, filesFolder)
+	srvr.AddHandler("/upload", "Upload", False)
+	srvr.AddHandler("/test", "Test", False)
+	srvr.Start
+	Log("Server started")
+	StartMessageLoop
+End Sub
+
+Sub UpdateIp_Tick
+	Dim j As HttpJob
+	j.Initialize("j", Me)
+	j.Download2("http://www.duckdns.org/update", Array As String("domains", domain, "token", token, _
+		"ip", ""))
+End Sub
+
+Sub JobDone (j As HttpJob)
+	If j.Success = True Then
+		Log("Update DuckDNS: " & j.GetString)
+	Else
+		Log("Error updating Duck DNS: " & j.ErrorMessage)
+	End If
+	j.Release
+End Sub
+
