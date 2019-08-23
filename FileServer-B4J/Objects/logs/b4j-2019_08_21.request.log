@@ -1,0 +1,4 @@
+127.0.0.1 - - [21/Aug/2019:09:44:37 +0000] "GET /test HTTP/1.1" 200 31 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+127.0.0.1 - - [21/Aug/2019:09:44:37 +0000] "GET /favicon.ico HTTP/1.1" 404 326 "http://127.0.0.1:54021/test" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+127.0.0.1 - - [21/Aug/2019:11:09:51 +0000] "GET /test HTTP/1.1" 200 31 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+127.0.0.1 - - [21/Aug/2019:11:10:50 +0000] "GET /test HTTP/1.1" 200 31 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"

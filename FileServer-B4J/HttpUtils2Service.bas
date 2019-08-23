@@ -1,6 +1,8 @@
-﻿Type=StaticCode
+﻿B4J=true
+Group=Default Group
+ModulesStructureVersion=1
+Type=StaticCode
 Version=1.45
-B4J=true
 @EndOfDesignText@
  
 Sub Process_Globals
@@ -24,7 +26,7 @@ End Sub
 Public Sub SubmitJob(job As HttpJob) As Int
 	taskCounter = taskCounter + 1
 	TaskIdToJob.Put(taskCounter, job)
-	If job.Username <> "" AND job.Password <> "" Then
+	If job.Username <> "" And job.Password <> "" Then
 		hc.ExecuteCredentials(job.GetRequest, taskCounter, job.Username, job.Password)
 	Else
 		hc.Execute(job.GetRequest, taskCounter)

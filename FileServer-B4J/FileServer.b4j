@@ -1,33 +1,28 @@
-﻿Version=1.45
-AppType=StandardJava
-IconFile=
-NumberOfModules=4
-Module3=HttpJob
-ModuleVisible3=0
-Module4=HttpUtils2Service
-ModuleVisible4=0
-Module1=Upload
-ModuleVisible1=1
-Module2=Test
-ModuleVisible2=1
-Package=b4j.example
-UserTypesHint=Test,Upload,HttpJob
-NumberOfFiles=0
-NumberOfLibraries=4
+﻿AppType=StandardJava
+Build1=Default,b4j.example
+Group=Default Group
 Library1=jcore
 Library2=jhttp
 Library3=jserver
 Library4=jstringutils
+Module1=Upload
+Module2=Test
+Module3=HttpJob
+Module4=HttpUtils2Service
+NumberOfFiles=0
+NumberOfLibraries=4
+NumberOfModules=4
+Version=7.51
 @EndOfDesignText@
 'Non-UI application (console application)
 #Region  Project Attributes 
 	#CommandLineArgs:
-	#MergeLibraries: False 
+	#MergeLibraries: true 
 #End Region
 
 Sub Process_Globals
-	Private domain As String = "xxx"
-	Private token As String = "yyy"
+	Private domain As String = "dispatchit"
+	Private token As String = "b1941a0d-33a7-43ef-8167-0660d4a24a87"
 	Private updateIp As Timer
 	Private srvr As Server
 	Public filesFolder As String = "uploaded"

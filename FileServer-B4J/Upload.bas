@@ -1,6 +1,8 @@
-﻿Type=Class
+﻿B4J=true
+Group=Default Group
+ModulesStructureVersion=1
+Type=Class
 Version=1.45
-B4J=true
 @EndOfDesignText@
 'Class module
 Sub Class_Globals
